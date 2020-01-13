@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
     <Header :numCorrectAnswers="numCorrectAnswers" :totalAnswers="totalAnswers"/>
     <b-container class="bv-example-row">
       <b-row>
@@ -64,6 +63,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  background-image: url("/img/game-icons-background.png");
+  background-repeat: repeat, repeat;
 }
 </style>

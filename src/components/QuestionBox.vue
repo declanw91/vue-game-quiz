@@ -3,18 +3,20 @@
         <b-jumbotron>
 
             <template v-slot:lead>
-             {{ currentQuestion.question }}
+             <span v-html="currentQuestion.question"></span>
             </template>
 
             <hr class="my-4">
 
             <b-list-group>
-                <b-list-group-item :class= "answerClass(index)" v-for="(answer, index) in answers" :key="index" @click="selectAnswer(index)">{{answer}}</b-list-group-item>
+                <b-list-group-item :class= "answerClass(index)" v-for="(answer, index) in shuffledAnswers" :key="index" @click="selectAnswer(index)">
+                    <span v-html="answer"></span>
+                    </b-list-group-item>
             </b-list-group>
 
             <b-button variant="primary"
-            v-on:click="submitAnswer" :disabled="selectedIndex === null && answered">Submit</b-button>
-            <b-button @click="nextQuestion" variant="success" href="#">Next</b-button>
+            v-on:click="submitAnswer" :disabled="selectedIndex === null || answered">Submit</b-button>
+            <b-button @click="nextQuestion" variant="success" href="#" :disabled="!answered">Next</b-button>
         </b-jumbotron>
     </div>
 </template>
@@ -59,7 +61,8 @@ export default {
         shuffleAnswers: function() {
             let answers = [...this.currentQuestion.incorrect_answers, this.currentQuestion.correct_answer];
             this.shuffledAnswers = _.shuffle(answers);
-            this.correctIndex = this.shuffledAnswers.indexOf(this.currentQuestion.correct_answer);
+            let correctAnswer = this.currentQuestion.correct_answer;
+            this.correctIndex = this.shuffledAnswers.indexOf(correctAnswer);
         },
         submitAnswer: function() {
             let isCorrect = false;
