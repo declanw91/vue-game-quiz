@@ -9,6 +9,7 @@
             :currentQuestion="questions[index]"
             :nextQuestion="nextQuestion"
             :increment="increment"
+            :totalAnswers="totalAnswers"
           />
         </b-col>
       </b-row>

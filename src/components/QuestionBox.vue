@@ -16,7 +16,7 @@
 
             <b-button variant="primary"
             v-on:click="submitAnswer" :disabled="selectedIndex === null || answered">Submit</b-button>
-            <b-button @click="nextQuestion" variant="success" href="#" :disabled="!answered">Next</b-button>
+            <b-button @click="nextQuestion" variant="success" href="#" :disabled="!answered || this.totalAnswers >= 10">Next</b-button>
         </b-jumbotron>
     </div>
 </template>
@@ -27,7 +27,8 @@ export default {
     props: {
         currentQuestion: Object,
         nextQuestion: Function,
-        increment: Function
+        increment: Function,
+        totalAnswers: Object
     },
     data(){
         return {
@@ -106,5 +107,8 @@ export default {
     }
     .incorrectAnswer {
         background: #FF0000;
+    }
+    .question-box-wrapper {
+        margin-top: 10px;
     }
 </style>
