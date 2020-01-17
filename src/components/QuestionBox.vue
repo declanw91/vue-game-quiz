@@ -28,7 +28,7 @@ export default {
         currentQuestion: Object,
         nextQuestion: Function,
         increment: Function,
-        totalAnswers: Object
+        totalAnswers: Number
     },
     data(){
         return {
@@ -71,7 +71,7 @@ export default {
                 isCorrect = true;
             }
             this.answered = true;
-            this.increment(isCorrect)
+            this.increment(isCorrect);
         },
         answerClass: function(index) {
             let answerClass = '';

@@ -14,17 +14,20 @@
         </b-col>
       </b-row>
     </b-container>
+    <GameOverModal :numCorrectAnswers="numCorrectAnswers" :totalAnswers="totalAnswers" :resetGame="resetGame"/>
   </div>
 </template>
 
 <script>
 import Header from './components/Header.vue'
 import QuestionBox from './components/QuestionBox.vue'
+import GameOverModal from './components/GameOverModal.vue'
 export default {
   name: 'app',
   components: {
     Header,
-    QuestionBox
+    QuestionBox,
+    GameOverModal
   },
   data() {
     return {
@@ -43,16 +46,31 @@ export default {
         this.numCorrectAnswers++;
       }
       this.totalAnswers++;
-    }
-  },
-  mounted: function() {
-    fetch('https://opentdb.com/api.php?amount=10&category=15&type=multiple', {
+      this.checkForGameOver();
+    },
+    resetGame: function() {
+      this.index = 0;
+      this.numCorrectAnswers = 0;
+      this.totalAnswers = 0;
+      this.getQuizQuestions();
+    },
+    checkForGameOver: function() {
+      if(this.totalAnswers >= 10){
+          this.$bvModal.show('game-over-modal');
+      }
+    },
+    getQuizQuestions: function() {
+      fetch('https://opentdb.com/api.php?amount=10&category=15&type=multiple', {
       method: 'GET'
     }).then((response) => {
        return response.json();
     }).then((jsonData) => {
       this.questions = jsonData.results;
     })
+    }
+  },
+  mounted: function() {
+    this.getQuizQuestions();
   }
 }
 </script>
